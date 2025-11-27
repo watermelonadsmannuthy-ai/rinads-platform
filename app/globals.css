@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global typography & smoothing */
+html,
+body {
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  @apply bg-wm-bg text-slate-50 leading-relaxed;
+}
+
+/* Section spacing utility so sections feel consistent */
+.section-wrapper {
+  @apply px-5 sm:px-8 lg:px-20 xl:px-32 max-w-6xl mx-auto;
+}
+
+/* Fade-up animation used for hero and cards */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.7s ease-out forwards;
+}
+
+/* Float animation for hero visual */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Safe area for mobile bottom nav */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+

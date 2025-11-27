@@ -1,0 +1,8 @@
+{
+  // Use separate goto location settings instead of deprecated editor.gotoLocation.multiple
+  "editor.gotoLocation.multipleDefinitions": "peek",
+  "editor.gotoLocation.multipleImplementations": "peek",
+  "editor.gotoLocation.multipleReferences": "peek",
+  "editor.gotoLocation.multipleTypeDefinitions": "peek"
+}
+
