@@ -1,49 +1,43 @@
-import type { Metadata } from "next";
-import React from "react";
 import "./globals.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 const siteUrl = "https://rinads.com";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: {
-    default: "RINADS | Creative Performance Marketing Studio",
-    template: "%s | RINADS",
+    default: "RINADS BusinessOS | All-in-One Business Operating System",
+    template: "%s | RINADS BusinessOS"
   },
   description:
-    "RINADS helps ambitious brands grow through creative-first performance marketing, storytelling, and education.",
+    "RINADS BusinessOS powers salons, clinics, retail stores, financial services, and education institutions with vertical-specific modules that adapt to your business.",
   metadataBase: new URL(siteUrl),
   icons: {
-    icon: "/favicon.svg",
+    icon: "/favicon.svg"
   },
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "RINADS | Creative Performance Marketing Studio",
+    title: "RINADS BusinessOS | All-in-One Business Operating System",
     description:
-      "Creative, data-led performance marketing and education for digital-first brands.",
-    siteName: "RINADS",
+      "One platform for every vertical. Complete business management for salons, clinics, retail, finance, and education.",
+    siteName: "RINADS BusinessOS"
   },
   twitter: {
     card: "summary_large_image",
-    title: "RINADS | Creative Performance Marketing Studio",
+    title: "RINADS BusinessOS | All-in-One Business Operating System",
     description:
-      "Creative-first performance marketing studio and academy for ambitious brands.",
-  },
+      "One platform for every vertical. Complete business management system."
+  }
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  // Platform page (homepage) has its own navigation, so we don't wrap it
-  // For other pages (marketing-archive, resources, etc.), use Navbar/Footer
+export default function RootLayout({ children }: { children: any }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="bg-wm-bg text-slate-50 antialiased">
-        {children}
+      <body className="bg-black text-white antialiased">
+        <div className="relative min-h-screen flex flex-col">
+          {/* Subtle background gradient */}
+          <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-slate-900 via-black to-black"></div>
+          <main className="flex-1">{children}</main>
+        </div>
       </body>
     </html>
   );
