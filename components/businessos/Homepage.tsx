@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import RevealOnScroll from "../RevealOnScroll";
 import Link from "next/link";
+import LatestFeatures from "./LatestFeatures";
 
 const verticals = [
   {
@@ -209,6 +210,9 @@ export default function BusinessOSHomepage() {
           </div>
         </div>
       </div>
+
+      {/* Latest Features Section */}
+      <LatestFeatures />
 
       {/* CTA Section */}
       <div className="py-24 relative border-t border-gray-900">

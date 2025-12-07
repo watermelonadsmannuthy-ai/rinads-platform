@@ -11,6 +11,7 @@ export default function BusinessOSNav() {
     { label: "Verticals", href: "/verticals" },
     { label: "Features", href: "/features" },
     { label: "Modules", href: "/modules" },
+    { label: "What's New", href: "/whats-new" },
     { label: "Pricing", href: "/pricing" },
     { label: "Help", href: "/help" },
   ];
