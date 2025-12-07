@@ -51,6 +51,16 @@ export const latestFeatures: Feature[] = [
     icon: "Settings",
     link: "/modules/automation",
   },
+  {
+    id: "5",
+    title: "Real-time Inventory Alerts",
+    description: "Get instant notifications when stock levels are low. Set custom reorder points and never run out of inventory again. Works across all verticals.",
+    category: "Inventory",
+    date: "2024-12-08",
+    icon: "Package",
+    link: "/modules/inventory-management",
+    badge: "New",
+  },
 ];
 
 // Helper function to get features sorted by date (newest first)
