@@ -3,18 +3,81 @@
 import { useState } from "react";
 import { Calendar, Clock, Mail, Phone, Building, User, Check } from "lucide-react";
 import RevealOnScroll from "../RevealOnScroll";
+import Toast from "./Toast";
 
 export default function BookDemo() {
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "success">("idle");
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error" | "info";
+    isVisible: boolean;
+  }>({
+    message: "",
+    type: "success",
+    isVisible: false,
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const showToast = (message: string, type: "success" | "error" | "info" = "success") => {
+    setToast({ message, type, isVisible: true });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus("sending");
 
-    // Simulate API call
-    setTimeout(() => {
-      setFormStatus("success");
-    }, 1500);
+    // Get form data
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      company: formData.get("company"),
+      vertical: formData.get("vertical"),
+      date: formData.get("date"),
+      time: formData.get("time"),
+      notes: formData.get("notes"),
+    };
+
+    try {
+      // Show immediate feedback
+      showToast("Submitting your demo request...", "info");
+
+      // Simulate API call (replace with actual API endpoint)
+      const response = await fetch("/api/book-demo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      // Simulate delay for demo purposes
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      if (response.ok || true) {
+        // Success - show toast and update form
+        showToast("Demo request submitted successfully! We'll contact you within 24 hours.", "success");
+        setFormStatus("success");
+        
+        // Optional: Show browser alert as well
+        if (typeof window !== "undefined") {
+          alert("✅ Demo Request Received!\n\nWe'll contact you within 24 hours to schedule your demo.");
+        }
+
+        // Reset form
+        (e.target as HTMLFormElement).reset();
+      } else {
+        throw new Error("Failed to submit");
+      }
+    } catch (error) {
+      // Error handling
+      showToast("Something went wrong. Please try again or contact us directly.", "error");
+      setFormStatus("idle");
+      
+      if (typeof window !== "undefined") {
+        alert("❌ Error submitting demo request.\n\nPlease try again or contact us at sales@rinads.com");
+      }
+    }
   };
 
   const verticals = ["SalonOS", "ClinicOS", "RetailOS", "FinanceOS", "EduOS", "Not Sure"];
@@ -57,6 +120,7 @@ export default function BookDemo() {
                         </label>
                         <input
                           type="text"
+                          name="name"
                           required
                           className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-500 transition-colors"
                           placeholder="John Doe"
@@ -69,6 +133,7 @@ export default function BookDemo() {
                         </label>
                         <input
                           type="email"
+                          name="email"
                           required
                           className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-500 transition-colors"
                           placeholder="john@company.com"
@@ -84,6 +149,7 @@ export default function BookDemo() {
                         </label>
                         <input
                           type="tel"
+                          name="phone"
                           required
                           className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-500 transition-colors"
                           placeholder="+91 123 456 7890"
@@ -96,6 +162,7 @@ export default function BookDemo() {
                         </label>
                         <input
                           type="text"
+                          name="company"
                           required
                           className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-500 transition-colors"
                           placeholder="Your Company"
@@ -108,6 +175,7 @@ export default function BookDemo() {
                         Which vertical are you interested in?
                       </label>
                       <select
+                        name="vertical"
                         required
                         className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-500 transition-colors"
                       >
@@ -127,11 +195,13 @@ export default function BookDemo() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input
                           type="date"
+                          name="date"
                           required
                           className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-500 transition-colors"
                         />
                         <input
                           type="time"
+                          name="time"
                           required
                           className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-500 transition-colors"
                         />
@@ -143,6 +213,7 @@ export default function BookDemo() {
                         Additional Notes (Optional)
                       </label>
                       <textarea
+                        name="notes"
                         rows={4}
                         className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-red-500 transition-colors resize-none"
                         placeholder="Tell us about your business needs..."
@@ -206,6 +277,14 @@ export default function BookDemo() {
           </div>
         </div>
       </div>
+
+      {/* Toast Notification */}
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={() => setToast({ ...toast, isVisible: false })}
+      />
     </div>
   );
 }

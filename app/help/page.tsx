@@ -1,3 +1,5 @@
+"use client";
+
 import BusinessOSNav from "../../components/businessos/BusinessOSNav";
 import HelpCenter from "../../components/businessos/HelpCenter";
 
