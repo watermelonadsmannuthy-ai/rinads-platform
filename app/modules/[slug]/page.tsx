@@ -12,3 +12,7 @@ export default function ModuleDetailPage({ params }: { params: { slug: string } 
   );
 }
 
+
+
+
+

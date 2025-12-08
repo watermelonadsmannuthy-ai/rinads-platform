@@ -1,0 +1,76 @@
+CURSOR MASTER PROMPT — Build RINADS Salon ERP (Full-stack, Multi-tenant, Feature Flags)
+
+Context and Assets:
+- You have access to a starter repository archive named `rinads_repo.zip` (included in this package).
+- You also have architecture reference images in /images (feature-flag architecture diagrams and multi-tenant diagrams). Read them to understand the desired feature-flag router and multi-tenant design.
+- Use the RINADS product-spec (appointments, services, inventory, staff, AI upsells, franchise module) and the feature/tiering model described below as your source of truth.
+- Target stack: Next.js (TypeScript) + Tailwind, Supabase (Postgres + Auth), Vercel serverless functions, Razorpay for billing, OpenAI for AI features.
+
+Primary Goal:
+Generate a complete, production-ready, commit-ready Git repository implementing a **single codebase multi-tenant SaaS** for RINADS with feature flags enabling tier differentiation (Solo, Studio, Pro, Enterprise). Delivery must be a ZIP named `rinads_repo_cursor_ready_for_cursor_final.zip` containing the full repo and docs.
+
+Core Requirements (implement exactly):
+
+1) Multi-tenant architecture:
+   - Single codebase, tenant-scoped data via `tenant_id`.
+   - Supabase tables: tenants, tenant_settings, app_users, services, appointments, staff, inventory, subscriptions, plan_features, tenant_feature_overrides, feature_flags, feature_usage.
+   - Implement per-tenant subdomain support (tenant.subdomain.renads.com) wiring placeholders.
+
+2) Feature Flags & Toggle Router:
+   - Implement feature_flags catalog and plan_features mapping (Solo/Studio/Pro/Enterprise) and tenant_feature_overrides.
+   - Implement a toggle router / useFeatureFlags hook (server + client caching) that returns feature state per-tenant and supports context-aware decisions (user role, plan, custom overrides).
+   - Include edge-cache strategy: short TTL (10–30s) and fallback to DB.
+   - Provide examples: staff_module, advanced_reports, ai_assistant, multi_branch, franchise_module, sms_marketing.
+
+3) Billing & Razorpay automation:
+   - API endpoint to create Razorpay subscription (notes must include tenant_id).
+   - Secure webhook endpoint: verify signature, ensure idempotency (store processed event ids), map Razorpay plan_id → internal plan slug, update tenant plan in Supabase, upsert subscriptions.
+   - Implement soft grace-period logic placeholder (e.g., 7 days before auto-downgrade).
+
+4) Row-Level Security (RLS) & Security:
+   - Provide SQL policy templates enforcing tenant isolation using `app_users.id = auth.uid()`.
+   - Create server-only endpoints that use SUPABASE_SERVICE_ROLE_KEY; never expose service role key to client.
+
+5) Admin Dashboard:
+   - Tenants list, Tenant detail with plan override UI, manual plan change, feature override toggles, webhook replay/inspect UI, and logs view (recent webhook events & processing status).
+   - Admin actions must call server endpoints (server validated).
+
+6) Onboarding & Automation:
+   - Signup flow: create tenant, create owner user, initial setup wizard (logo, services, staff).
+   - Automated onboarding steps in DB and a sample Notion-like import as CSV (client can import).
+
+7) Error Handling, Observability & Support Desk hooks:
+   - Integrate Sentry hooks (placeholder) and structured logging.
+   - Provide a webhook dead-letter queue pattern and admin UI to re-run failed webhooks.
+   - Auto-ticket creation mapping rules (Sentry event types → ticket codes like AUTH_MAGIC_FAIL, PAY_SUB_FAIL, RLS_DENY).
+   - Provide support desk integration placeholders (Intercom/Freshdesk webhooks) and SLA mapping by plan tier.
+
+8) Tests & Idempotency:
+   - Include test skeletons for webhook signature verification and feature flag enforcement.
+   - Implement webhook events table to store processed event IDs and avoid duplicate processing.
+
+9) Seed script & sample tenants:
+   - scripts/seed.ts must create sample tenants: Trendy Cuts (studio), Glow Salon (pro), Mannuthy Spa (enterprise), Solo Stylist (solo) and add minimal sample data (services, sample staff).
+
+10) Documentation:
+   - Top-level README.md with env vars list, local dev, deployment to Vercel, and Razorpay setup instructions.
+   - CURSOR_RUN_INSTRUCTIONS.txt with the exact one-line command to run in Cursor.
+
+Delivery:
+- Produce a ZIP `rinads_repo_cursor_ready_for_cursor_final.zip` containing:
+  - `rinads_repo.zip` (the starter repo)
+  - `CURSOR_MASTER_PROMPT.txt` (this prompt)
+  - `CURSOR_RUN_INSTRUCTIONS.txt` (one-line command)
+  - `images/` (the architecture diagrams)
+  - `README_UPLOAD_NOTES.txt` (notes for the operator)
+
+Behavioral constraints:
+- Prefer App Router (/app) layout if Cursor supports it. Otherwise use /pages but keep structure consistent.
+- Use TypeScript across server and client code.
+- Add TODO markers for real Razorpay plan IDs and any secrets.
+- Ensure server functions use SUPABASE_SERVICE_ROLE_KEY and client uses anon keys.
+
+One-line command to run in Cursor:
+run using "CURSOR MASTER PROMPT" with archive rinads_repo.zip
+
+End of prompt.

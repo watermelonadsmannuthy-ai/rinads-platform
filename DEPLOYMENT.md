@@ -149,3 +149,7 @@ If you have environment variables (like `NEXT_PUBLIC_GEMINI_API_KEY`):
 - Next.js Deployment: https://nextjs.org/docs/deployment
 - Domain Configuration: https://vercel.com/docs/concepts/projects/domains
 
+
+
+
+

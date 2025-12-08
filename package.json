@@ -1,19 +1,29 @@
 {
-  "name": "watermelon-ads-academy-site",
+  "name": "rinads-salon-erp",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "tsx scripts/seed.ts",
+    "test:flags": "tsx scripts/test-feature-flags.ts",
+    "test:errors": "tsx scripts/test-error-handling.ts",
+    "test:resync": "tsx scripts/test-plan-resync.ts",
+    "test:all": "npm run test:flags && npm run test:errors && npm run test:resync"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "@sentry/nextjs": "^7.91.0",
     "lucide-react": "^0.555.0",
     "next": "14.2.5",
     "nodemailer": "^6.9.16",
+    "openai": "^4.20.1",
+    "razorpay": "^2.9.2",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
@@ -25,6 +35,7 @@
     "eslint-config-next": "14.2.5",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
+    "tsx": "^4.7.0",
     "typescript": "^5.6.3"
   }
 }

@@ -97,3 +97,7 @@ If you have any environment variables (like `NEXT_PUBLIC_GEMINI_API_KEY`):
 ✅ Domain configured in code: `rinads.com`
 ⏳ Next: Deploy to Vercel and connect domain
 
+
+
+
+

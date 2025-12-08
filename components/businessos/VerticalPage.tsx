@@ -318,3 +318,7 @@ export default function VerticalPage({ slug }: { slug: string }) {
   );
 }
 
+
+
+
+

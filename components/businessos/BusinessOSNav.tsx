@@ -1,16 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut, User } from "lucide-react";
+import { isAuthenticated, getCurrentUser, logout } from "@/lib/auth";
 
 export default function BusinessOSNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    setAuthenticated(isAuthenticated());
+    setUserEmail(getCurrentUser());
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+  };
 
   const navItems = [
     { label: "Verticals", href: "/verticals" },
     { label: "Features", href: "/features" },
     { label: "Modules", href: "/modules" },
+    { label: "Pipeline", href: "/pipeline" },
     { label: "What's New", href: "/whats-new" },
     { label: "Pricing", href: "/pricing" },
     { label: "Help", href: "/help" },
@@ -46,22 +59,56 @@ export default function BusinessOSNav() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <Link
-              href="/book-demo"
-              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 shadow-[0_0_15px_rgba(220,20,60,0.5)] border border-red-500 hover:shadow-red-500/50"
-            >
-              Book Demo
-            </Link>
+            {authenticated ? (
+              <>
+                <div className="flex items-center gap-2 text-gray-400 text-sm">
+                  <User size={16} />
+                  <span>{userEmail}</span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center gap-2"
+                >
+                  <LogOut size={16} />
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-gray-400 hover:text-white px-4 py-2 rounded-lg font-medium transition-all duration-300"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/book-demo"
+                  className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 shadow-[0_0_15px_rgba(220,20,60,0.5)] border border-red-500 hover:shadow-red-500/50"
+                >
+                  Book Demo
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-4">
-            <Link
-              href="/book-demo"
-              className="bg-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold"
-            >
-              Demo
-            </Link>
+            {authenticated ? (
+              <button
+                onClick={handleLogout}
+                className="bg-gray-800 text-white px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1"
+              >
+                <LogOut size={14} />
+                Logout
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                className="bg-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold"
+              >
+                Sign In
+              </Link>
+            )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="text-white p-2"

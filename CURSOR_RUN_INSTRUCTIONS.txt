@@ -1,0 +1,11 @@
+CURSOR UPLOAD & RUN INSTRUCTIONS
+
+1) Upload the file rinads_repo.zip to Cursor as the project archive.
+2) In Cursor's command prompt, run the following one-line command (copy-paste exactly):
+
+   run using "CURSOR MASTER PROMPT" with archive rinads_repo.zip
+
+Notes:
+- After generation, replace placeholder Razorpay plan IDs in server files.
+- Set environment variables in Vercel: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET, RAZORPAY_WEBHOOK_SECRET, NEXT_PUBLIC_OPENAI_KEY (if using AI).
+- Run `npm install`, run the seed script (`npm run seed`) and `npm run dev` locally to test.
