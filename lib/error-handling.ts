@@ -1,7 +1,8 @@
 // Comprehensive Error Handling System
 // Maps all error types to codes, priorities, and auto-ticket creation
 
-import { logError, ErrorCode, LogContext } from './observability';
+import { logError, logInfo, ErrorCode, LogContext } from './observability';
+export { logError, logInfo };
 import { supabaseAdmin } from './supabase/server';
 
 // Extended error codes matching the specification

@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
       try {
         // Create recurring tasks
         const recurringResult = await createRecurringTasks(tenant.id);
-        
+
         // Allocate daily tasks
         const allocationResult = await allocateDailyTasks(tenant.id);
 
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
 
         results.push({
           tenant_id: tenant.id,
-          recurring_created: recurringResult.created || 0,
+          recurring_created: recurringResult?.created || 0,
           tasks_allocated: allocationResult.allocated || 0,
         });
       } catch (error: any) {

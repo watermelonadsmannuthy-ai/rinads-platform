@@ -1,7 +1,7 @@
 // Automation Engine - Daily Tasks, Carry-Over, AI Allocator
 import { supabaseAdmin } from './supabase/server';
 import { Task, TaskStatus, TaskPriority } from './types-extended';
-import { logInfo, logError, ExtendedErrorCode } from './error-handling';
+import { logInfo, handleError, ExtendedErrorCode } from './error-handling';
 
 /**
  * Create recurring tasks based on patterns
@@ -58,7 +58,7 @@ export async function createRecurringTasks(tenantId: string) {
 
     return { created: newTasks.length };
   } catch (error: any) {
-    logError(error, ExtendedErrorCode.FEATURE_FLAG_ERROR, { tenantId });
+    await handleError(error, ExtendedErrorCode.FEATURE_FLAG_ERROR, { tenantId });
     throw error;
   }
 }
@@ -84,7 +84,7 @@ function shouldCreateRecurringTask(task: any, today: Date, lastCompleted: Date |
 
 function calculateNextDueDate(task: any, today: Date): string {
   const nextDate = new Date(today);
-  
+
   switch (task.recurring) {
     case 'daily':
       nextDate.setDate(nextDate.getDate() + 1);
@@ -194,7 +194,7 @@ export async function allocateDailyTasks(tenantId: string, targetDate: Date = ne
 
     return { allocated, updates: updates.map(u => ({ id: u.id, staff_id: u.staff_id })) };
   } catch (error: any) {
-    logError(error, ExtendedErrorCode.FEATURE_FLAG_ERROR, { tenantId });
+    await handleError(error, ExtendedErrorCode.FEATURE_FLAG_ERROR, { tenantId });
     throw error;
   }
 }
@@ -251,9 +251,7 @@ export async function endOfDayCarryOver(tenantId: string, date: Date = new Date(
     const updates = incompleteTasks.map((task) => ({
       id: task.id,
       allocated_date: nextDay.toISOString(),
-      status: task.status === 'in_progress' ? 'pending' : 'pending',
-      // Mark as overdue if past due date
-      status: task.due_date && new Date(task.due_date) < date ? 'overdue' : task.status,
+      status: (task.due_date && new Date(task.due_date) < date) ? 'overdue' : 'pending',
     }));
 
     for (const update of updates) {
@@ -277,7 +275,7 @@ export async function endOfDayCarryOver(tenantId: string, date: Date = new Date(
 
     return { carriedOver: updates.length, tasks: updates };
   } catch (error: any) {
-    logError(error, ExtendedErrorCode.FEATURE_FLAG_ERROR, { tenantId });
+    await handleError(error, ExtendedErrorCode.FEATURE_FLAG_ERROR, { tenantId });
     throw error;
   }
 }
@@ -340,7 +338,7 @@ export async function createDailyTodoDoc(tenantId: string, date: Date = new Date
     // Store in system_config or return
     return doc;
   } catch (error: any) {
-    logError(error, ExtendedErrorCode.FEATURE_FLAG_ERROR, { tenantId });
+    await handleError(error, ExtendedErrorCode.FEATURE_FLAG_ERROR, { tenantId });
     throw error;
   }
 }

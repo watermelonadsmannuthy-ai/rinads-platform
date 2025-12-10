@@ -1,0 +1,58 @@
+================================================
+VERCEL ENVIRONMENT VARIABLES - COPY & PASTE
+================================================
+
+✅ REQUIRED VARIABLES (Must add these):
+
+Name: NEXT_PUBLIC_SUPABASE_URL
+Value: https://zqeamdmbkvcojriwmoqc.supabase.co
+
+Name: NEXT_PUBLIC_SUPABASE_ANON_KEY
+Value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpxZWFtZG1ia3Zjb2pyaXdtb3FjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyMTc3MDIsImV4cCI6MjA4MDc5MzcwMn0.ekaXGm1aCSXK4PryBUvvml0sUvf85Ty_lC5_o9oxpBI
+
+Name: SUPABASE_SERVICE_ROLE_KEY
+Value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpxZWFtZG1ia3Zjb2pyaXdtb3FjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTIxNzcwMiwiZXhwIjoyMDgwNzkzNzAyfQ.Q3GTiVoBPRvaKfI0fQNea4mQCEoHEc5e0eipFPTF9SQ
+
+Name: CRON_SECRET
+Value: tcTduwaMnlNSwkTCRAw3uLzTAgicvhfkmk4gr0fv3e4=
+
+Name: OPENAI_API_KEY
+Value: [YOU NEED TO ADD YOUR OPENAI KEY - Get from: https://platform.openai.com/api-keys]
+
+Name: OPENAI_MODEL
+Value: gpt-4-turbo-preview
+
+Name: NEXT_PUBLIC_APP_URL
+Value: [LEAVE BLANK - Will update after deployment]
+
+================================================
+
+⚠️ OPTIONAL BUT RECOMMENDED (For email features):
+
+Name: SMTP_HOST
+Value: smtp.gmail.com
+
+Name: SMTP_PORT
+Value: 587
+
+Name: SMTP_USER
+Value: [Your Gmail address]
+
+Name: SMTP_PASS
+Value: [Your Gmail App Password - Get from: https://myaccount.google.com/apppasswords]
+
+Name: SMTP_FROM
+Value: noreply@rinads.com
+
+Name: DEMO_RECIPIENT_EMAIL
+Value: [Email where demo requests should go]
+
+================================================
+
+📌 NOTES:
+- You MUST add OPENAI_API_KEY or the build will fail
+- If you don't have an OpenAI key, you can use a dummy value like "sk-dummy-key-for-build" temporarily
+- SMTP variables are optional - skip them if you don't need email features yet
+- After deployment, come back and update NEXT_PUBLIC_APP_URL with your actual Vercel URL
+
+================================================

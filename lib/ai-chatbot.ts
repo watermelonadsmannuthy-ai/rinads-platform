@@ -48,6 +48,10 @@ export async function getAIResponse(
       conversation = newConv as any;
     }
 
+    if (!conversation) {
+      throw new Error('Failed to initialize conversation');
+    }
+
     // Get database context for insights
     const context = await getDatabaseContext(tenantId);
 
@@ -71,7 +75,7 @@ ${JSON.stringify(context, null, 2)}
 
 Be helpful, concise, and actionable. Use the database context to provide specific insights when relevant.`,
       },
-      ...(conversation.messages as AIMessage[]).map((msg) => ({
+      ...(conversation?.messages as AIMessage[] || []).map((msg) => ({
         role: msg.role as 'user' | 'assistant',
         content: msg.content,
       })),
