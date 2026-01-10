@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const siteUrl = "https://rinads.com";
 
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: any }) {
           <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-slate-900 via-black to-black"></div>
           <main className="flex-1">{children}</main>
         </div>
+        <Analytics />
       </body>
     </html>
   );
